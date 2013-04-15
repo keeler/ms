@@ -6,28 +6,28 @@ Keeler Russell & Jeff Cailteux
 Requirements:
 
 ms system-wide statistics:
-Total                 []
-In Use                []
-Free                  []
-Shared                []
-Non-shared 			  []
+Total                 [x]
+In Use                [x]
+Free                  [x]
+Shared                [x]
+Non-shared						[x]
 
 ms displays stats for all processes:
-Stats                 []
+Stats                 [x]
 
 ms per-process statistics:
-Process ID            []
-Resident set size     []
-Unique set size       []
-Shared set size       []
-Proportional set size []
-Process command line  []
+Process ID            [x]
+Resident set size     [x]
+Unique set size       [x]
+Shared set size       [x]
+Proportional set size [x]
+Process command line  [x]
 
 Option to sort data by each key:
-Option                []
+Option                [x]
 
 Mystery program classification:
-Classification        []
+Classification        [x]
 
-Report                []
+Report                [x]
 
