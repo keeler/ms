@@ -1,0 +1,44 @@
+=================
+Class (a): hemera
+=================
+The unique set size of each of the children is very different, which is a dead
+giveaway since no other class explicitly states that each unique set size is
+different. On top of that, though, the amount of shared space is low.
+
+=================
+Class (b): typhon
+=================
+Each child allocates the same unique set size, and has a relatively small shared
+set size. Additionally, the proportional set size of each child is the same, so
+each shares what it shares equally with the other children.
+
+================
+Class (c): ourea
+================
+Each child has the same proportional set size, resident set size, and shared set
+size. Also, each has a small unique set size, so this satisfies the fact that
+they share one large buffer and have a relatively small amount of unique memory
+each.
+
+=================
+Class (d): aether
+=================
+Three children each have a smaller proportional set size than the other two,
+but each of the five children has the same resident set size and shared set
+size. This means two buffers of the same size are shared equally among a
+different number of children.
+
+=================
+Class (e): pontus
+=================
+Each child has the same resident set size, but also each has a different shared
+set size. Dead giveaway.
+
+=================
+Class (f): uranus
+=================
+Using the KVM with only 512 MB of space available it's pretty easy to use up all
+of the memory if you run enough programs. If you over-fill the system's memory
+by running all-mem-tests several times concurrently, uranus is the only program
+of the six that has zero swap set size, meaning none of its allocated memory
+gets swapped out to disk.
