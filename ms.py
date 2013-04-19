@@ -14,23 +14,29 @@ def read_smaps( pid ):
 	smaps.close()
 	return [mem[x] for x in cols[2:]]
 
-procs = []
-for pid in [x for x in os.listdir( '/proc' ) if x.isdigit()]:
-	mem = read_smaps( pid )
-	cmd = open( '/proc/' + pid + '/stat' ).readline().split()[1][1:-1]
-	if mem[0]: procs.append( [pid, cmd] + mem )
+def get_processes():
+	procs = []
+	for pid in [x for x in os.listdir( '/proc' ) if x.isdigit()]:
+		mem = read_smaps( pid )
+		cmd = open( '/proc/' + pid + '/stat' ).readline().split()[1][1:-1]
+		if mem[0]: procs.append( [pid, cmd] + mem )
+	return procs
 
-maxes = defaultdict( int )
-for i in range( len( cols ) ):
-	maxes[cols[i]] = max( [len( cols[i] )] + [len( str( x[i] ) ) for x in procs] )
-
-for col in cols:
-	print '|', col.upper().center( maxes[col] ),
-print '|\n', '=' * ( sum( [maxes[col] + 3 for col in cols] ) + 1 )
-
-procs.sort( key = lambda x: x[1] )
-for p in procs:
+def print_processes( procs ):
+	maxes = defaultdict( int )
 	for i in range( len( cols ) ):
-		print '|', str( p[i] ).rjust( maxes[cols[i]] ),
-	print '|\n',
+		maxes[cols[i]] = max( [len( cols[i] )] + [len( str( x[i] ) ) for x in procs] )
 
+	for col in cols:
+		print '|', col.upper().center( maxes[col] ),
+	print '|\n', '=' * ( sum( [maxes[col] + 3 for col in cols] ) + 1 )
+
+	procs.sort( key = lambda x: x[1] )
+	for p in procs:
+		for i in range( len( cols ) ):
+			print '|', str( p[i] ).rjust( maxes[cols[i]] ),
+		print '|\n',
+
+if __name__ == '__main__':
+	p = get_processes()
+	print_processes( p )
