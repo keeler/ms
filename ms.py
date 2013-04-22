@@ -1,9 +1,11 @@
 import os
 from collections import defaultdict
+from optparse import OptionParser
+
 cols = ['pid', 'cmd', 'total', 'res', 'shr', 'uss', 'pss', 'swp']
 
 def read_smaps( pid ):
-	smaps = open( '/proc/' + pid + '/smaps' )
+	smaps = open( '/proc/' + str( pid ) + '/smaps' )
 	fieldmap = { 'Rss:' : 'res', 'Shared_Clean:' : 'shr', 'Shared_Dirty:' : 'shr', 'Private_Clean:' : 'uss', 'Private_Dirty:' : 'uss', 'Pss:' : 'pss', 'Size:' : 'total', 'Swap:' : 'swp' }
 	mem = defaultdict( int )
 	for line in smaps:
@@ -16,9 +18,9 @@ def read_smaps( pid ):
 
 def get_processes():
 	procs = []
-	for pid in [x for x in os.listdir( '/proc' ) if x.isdigit()]:
+	for pid in [int( x ) for x in os.listdir( '/proc' ) if x.isdigit()]:
 		mem = read_smaps( pid )
-		cmd = open( '/proc/' + pid + '/stat' ).readline().split()[1][1:-1]
+		cmd = open( '/proc/' + str( pid ) + '/stat' ).readline().split()[1][1:-1]
 		if mem[0]: procs.append( [pid, cmd] + mem )
 	return procs
 
@@ -31,12 +33,27 @@ def print_processes( procs ):
 		print '|', col.upper().center( maxes[col] ),
 	print '|\n', '=' * ( sum( [maxes[col] + 3 for col in cols] ) + 1 )
 
-	procs.sort( key = lambda x: x[1] )
 	for p in procs:
 		for i in range( len( cols ) ):
 			print '|', str( p[i] ).rjust( maxes[cols[i]] ),
 		print '|\n',
 
 if __name__ == '__main__':
-	p = get_processes()
-	print_processes( p )
+	usage = 'usage: %prog [options]\nGet process memory statistics.'
+	parser = OptionParser( usage = usage )
+	parser.add_option( '-s', '--sort', metavar = 'STATISTIC',
+					   help = 'Sort entries based on a particular statistic. Available options are pid, cmd, res, shr, uss, pss, and swp. Append a + or - to sort ascending or descending order, respectively.' )
+
+	( options, args ) = parser.parse_args()
+	if options.sort:
+		if len( options.sort ) == 4 and options.sort[:3] in cols and options.sort[-1] in ['+', '-']:
+			col = options.sort[:3]
+			order = options.sort[-1]
+			procs = get_processes()
+			procs.sort( key = lambda x: x[cols.index( col )], reverse = False if order == '+' else True )
+			print_processes( procs )
+		else:
+			parser.print_help()
+	else:
+		parser.print_help()
+
