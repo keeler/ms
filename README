@@ -3,3 +3,31 @@ ms -- Memory Status
 EECS 678 Project 3
 Keeler Russell & Jeff Cailteux
 
+Requirements:
+
+ms system-wide statistics:
+Total                 []
+In Use                []
+Free                  []
+Shared                []
+Non-shared 			  []
+
+ms displays stats for all processes:
+Stats                 []
+
+ms per-process statistics:
+Process ID            []
+Resident set size     []
+Unique set size       []
+Shared set size       []
+Proportional set size []
+Process command line  []
+
+Option to sort data by each key:
+Option                []
+
+Mystery program classification:
+Classification        []
+
+Report                []
+
