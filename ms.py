@@ -16,18 +16,6 @@ def read_smaps( pid ):
 	smaps.close()
 	return [mem[x] for x in cols[2:]]
 
-def get_overall_stats():
-	totalMem = 0
-	freeMem = 0
-	sharedMem = 0
-	for line in open( '/proc/meminfo' ):
-		fields = line.split()
-		if fields[0] == 'MemTotal:': totalMem = int( fields[1] )
-		elif fields[0] == 'MemFree:': freeMem = int( fields[1] )
-		elif fields[0] == 'Shmem:': sharedMem = int( fields[1] )
-
-	return [totalMem, freeMem, sharedMem]
-
 def get_processes():
 	procs = []
 	for pid in [int( x ) for x in os.listdir( '/proc' ) if x.isdigit()]:
@@ -41,6 +29,7 @@ def print_processes( procs ):
 	for i in range( len( cols ) ):
 		maxes[cols[i]] = max( [len( cols[i] )] + [len( str( x[i] ) ) for x in procs] )
 
+	print '=' * ( sum( [maxes[col] + 3 for col in cols] ) + 1 )
 	for col in cols:
 		print '|', col.upper().center( maxes[col] ),
 	print '|\n', '=' * ( sum( [maxes[col] + 3 for col in cols] ) + 1 )
