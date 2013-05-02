@@ -3,31 +3,39 @@ ms -- Memory Status
 EECS 678 Project 3
 Keeler Russell & Jeff Cailteux
 
-Requirements:
+===================
+Running the Program
+===================
+python ms.py <options>
 
+You must have root privileges.
+Use 'python ms.py --help' for more information on options.
+
+======================
+Requirements Checklist
+======================
 ms system-wide statistics:
-Total                 [x]
-In Use                [x]
-Free                  [x]
-Shared                [x]
-Non-shared						[x]
+    Total                 [x]
+    In Use                [x]
+    Free                  [x]
+    Shared                [x]
+    Non-shared            [x]
 
 ms displays stats for all processes:
-Stats                 [x]
+    Stats                 [x]
 
 ms per-process statistics:
-Process ID            [x]
-Resident set size     [x]
-Unique set size       [x]
-Shared set size       [x]
-Proportional set size [x]
-Process command line  [x]
+    Process ID            [x]
+    Resident set size     [x]
+    Unique set size       [x]
+    Shared set size       [x]
+    Proportional set size [x]
+    Process command line  [x]
 
 Option to sort data by each key:
-Option                [x]
+    Option                [x]
 
 Mystery program classification:
-Classification        [x]
-
-Report                [x]
+    Classification        [x]
+    Report                [x]
 
